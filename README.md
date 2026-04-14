@@ -10,30 +10,32 @@ Voici la structure actuelle du dépôt :
 
 ```text
 .
+├── docker-compose.yml       # Orchestration des services
 ├── LICENSE
-├── SERVEUR
-│   ├── MICROSERVICE (Backend Python)
-│   │   ├── Engine.py
-│   │   ├── __pycache__
-│   │   ├── arrets-lignes.csv
-│   │   ├── serveur.py
-│   │   ├── test.py
-│   │   ├── trafiq.proto
-│   │   ├── trafiq_pb2.py
-│   │   └── trafiq_pb2_grpc.py
-│   └── SERVEUR-PRINCIPAL (Proxy Go)
-│       ├── client_cmd
-│       │   └── client.go
-│       ├── go.mod
-│       ├── go.sum
-│       ├── p
-│       │   ├── trafiq.pb.go
-│       │   └── trafiq_grpc.pb.go
-│       ├── serveur.go
-│       └── trafiq.proto
-└── requirements.txt
+├── README.md
+└── SERVEUR
+    ├── MICROSERVICE (Backend Python) 
+    │   ├── Dockerfile
+    │   ├── Engine.py
+    │   ├── requirements.txt
+    │   ├── serveur.py
+    │   ├── test.py
+    │   ├── trafiq.proto
+    │   ├── trafiq_pb2.py
+    │   └── trafiq_pb2_grpc.py
+    └── SERVEUR-PRINCIPAL (Proxy Go)
+        ├── Dockerfile
+        ├── client_cmd
+        │   └── client.go
+        ├── go.mod
+        ├── go.sum
+        ├── p
+        │   ├── trafiq.pb.go
+        │   └── trafiq_grpc.pb.go
+        ├── serveur.go
+        └── trafiq.proto
 ```
-## Installation des dépendances via le fichier requirements
+## Installation des dépendances et lancement du serveur manuellement
 ```bash
 pip install -r requirements.txt
 ```
@@ -67,6 +69,35 @@ go run serveur.go
 ```bash
 cd SERVEUR/SERVEUR-PRINCIPAL
 go run client_cmd/client.go
+```
+## Lancement centralisé avec Docker 
+Grâce à Docker, le déploiement des serveurs est automatisé.
+
+# Configurer l'environnement
+Assurez-vous d'avoir un fichier .env à la racine contenant votre clé API si nécessaire (ex: API_KEY=votre_cle).
+
+# Lancer les microservices
+**Depuis la racine du projet, exécutez** :
+```bash
+docker compose up --build -d
+```
+Cette commande va construire et lancer le conteneur Python (port 1717) et le conteneur Go (ports 8080 et 8081) en arrière-plan.
+
+# Lancer le client de test (depuis votre machine locale)
+**Pour vérifier que les services communiquent bien, lancez le client Go qui va interroger le serveur principal sur le port 8081** :
+```bash
+go run SERVEUR/SERVEUR-PRINCIPAL/client_cmd/client.go
+```
+
+# Mise en veille ou suppresion
+**Pour supprimer les conteneurs** :
+```bash
+docker compose down
+```
+
+**Pour mettre en veille les conteneurs** :
+```bash
+docker compose stop
 ```
 
 ## Licence & Conditions
