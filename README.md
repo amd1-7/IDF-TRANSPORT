@@ -1,11 +1,11 @@
-# Trafiq - Initiation Microservices & gRPC
+# IDF-TRANSPORT - Initiation Microservices & gRPC
 
 ## 📌 Objectif du Projet
 Ce projet est une initiative personnelle visant à s'initier à l'architecture **microservices** et aux protocoles de communication modernes, plus précisément **gRPC** fonctionnant sur **HTTP/2.0**.
 
 L'idée centrale est de faire communiquer un serveur principal en **Go** avec un microservice de traitement en **Python**. Les données exploitées (horaires de transport) servent de support concret pour valider les échanges de données entre les différents services.
 
-## 🏗️ Architecture du Projet
+# 🏗️ Architecture du Projet
 Voici la structure actuelle du dépôt :
 
 ```text
@@ -35,7 +35,7 @@ Voici la structure actuelle du dépôt :
         ├── serveur.go
         └── trafiq.proto
 ```
-## Installation des dépendances et lancement du serveur manuellement
+# Installation des dépendances et lancement du serveur manuellement
 ```bash
 pip install -r requirements.txt
 ```
@@ -52,7 +52,7 @@ go get golang.org/x/net
 go mod tidy
 ```
 
-# Utilisation
+## Utilisation
 **Pour faire fonctionner l'ensemble, lancez les composants dans l'ordre suivant dans des terminaux séparés** :
 ```bash
 cd SERVEUR/MICROSERVICE
@@ -70,26 +70,26 @@ go run serveur.go
 cd SERVEUR/SERVEUR-PRINCIPAL
 go run client_cmd/client.go
 ```
-## Lancement centralisé avec Docker 
+# Lancement centralisé avec Docker 
 Grâce à Docker, le déploiement des serveurs est automatisé.
 
-# Configurer l'environnement
+## Configurer l'environnement
 Assurez-vous d'avoir un fichier .env à la racine contenant votre clé API si nécessaire (ex: API_KEY=votre_cle).
 
-# Lancer les microservices
+## Lancer les microservices
 **Depuis la racine du projet, exécutez** :
 ```bash
 docker compose up --build -d
 ```
 Cette commande va construire et lancer le conteneur Python (port 1717) et le conteneur Go (ports 8080 et 8081) en arrière-plan.
 
-# Lancer le client de test (depuis votre machine locale)
+## Lancer le client de test (depuis votre machine locale)
 **Pour vérifier que les services communiquent bien, lancez le client Go qui va interroger le serveur principal sur le port 8081** :
 ```bash
 go run SERVEUR/SERVEUR-PRINCIPAL/client_cmd/client.go
 ```
 
-# Mise en veille ou suppresion
+## Mise en veille ou suppresion
 **Pour supprimer les conteneurs** :
 ```bash
 docker compose down
@@ -100,7 +100,7 @@ docker compose down
 docker compose stop
 ```
 
-## Licence & Conditions
+# Licence & Conditions
 Ce projet est sous **Licence MIT**.
 
 Il est ouvert et peut être librement repris, modifié ou partagé. Toutefois, conformément aux termes de la licence, vous devez mentionner l'auteur original (moi-même) dans toute reprise du code ou du projet.
