@@ -7,6 +7,16 @@ from joblib import Memory
 cache = "./cache"
 mem = Memory(cache,verbose=0)
 
+@mem.cache
+def filtrer_csv_cache(arret, ville, bus):
+    data = pd.read_csv('arrets-lignes.csv', sep=';', encoding='utf-8')
+    filtres = (
+        (data['stop_name'].str.lower().str.strip() == str(arret).lower().strip()) &
+        (data['nom_commune'].str.lower().str.strip() == str(ville).lower().strip()) &
+        (data['route_long_name'].str.lower().str.strip() == str(bus).lower().strip())
+    )
+    return data.loc[filtres]
+
 class Engine:
     def __init__(self,arret,ville:str,bus,api_key):
         self.bus = bus
@@ -16,19 +26,9 @@ class Engine:
         self.arret = arret
 
         self.api_key = api_key
-    @mem.cache   
+
     def recuperer_données(self):
-        data = pd.read_csv('arrets-lignes.csv',sep=';',encoding='utf-8')
-
-        filtres = (
-                   (data['stop_name'].str.lower().str.strip() == str(self.arret).lower().strip()) 
-                   
-                 & (data['nom_commune'].str.lower().str.strip() == str(self.ville).lower().strip())
-                 
-                 & (data['route_long_name'].str.lower().str.strip() == str(self.bus).lower().strip())
-                 )
-
-        data_trouvée = data.loc[filtres]
+        data_trouvée = filtrer_csv_cache(self.arret, self.ville, self.bus)
 
         if data_trouvée.empty:
             return 'Votre saisie est Incorrecte,veuillez redéfinir vos entrées'
@@ -41,8 +41,8 @@ class Engine:
     def recuperer_temps_reel(self):
         url = "https://prim.iledefrance-mobilites.fr/marketplace/stop-monitoring"
 
-        lineRef = f'STIF:Line::{str(self.data['id'].iloc[0]).split(':')[-1]}:'
-        stopRef = f'STIF:StopPoint:Q:{str(self.data['stop_id'].iloc[0]).split(':')[-1]}:'
+        lineRef = f'STIF:Line::{str(self.data["id"].iloc[0]).split(':')[-1]}:'
+        stopRef = f'STIF:StopPoint:Q:{str(self.data["stop_id"].iloc[0]).split(':')[-1]}:'
 
         headers = {
         'apikey':self.api_key,
