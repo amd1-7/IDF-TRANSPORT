@@ -1,0 +1,39 @@
+# --- Environnements Virtuels ---
+venv/
+.venv/
+env/
+ENV/
+
+# --- Secrets et Config ---
+.env
+*.env
+.secret
+.ssh/
+
+# --- Python ---
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+
+# --- Go ---
+# Exclure les binaires compilés localement
+SERVEUR/SERVEUR-PRINCIPAL/serveur
+*.exe
+*.test
+*.prof
+
+# --- Git ---
+.git/
+.gitignore
+.gitattributes
+
+# --- Divers ---
+LICENSE
+README.md
+.DS_Store
+Thumbs.db

@@ -1,0 +1,19 @@
+services:
+  python-app:
+    build:                                 
+      context: .
+      dockerfile: SERVEUR/MICROSERVICE/Dockerfile
+    ports:                                 
+      - "1717:1717"
+    environment:
+      - API_KEY=${API_KEY}
+    volumes:
+      - ./SERVEUR/MICROSERVICE:/Multiservice-python
+  
+  go-app:
+    build:                               
+      context: .
+      dockerfile: SERVEUR/SERVEUR-PRINCIPAL/Dockerfile
+    ports:
+      - "8080:8080"
+      - "8081:8081"
