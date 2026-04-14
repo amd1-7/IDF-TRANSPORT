@@ -3,7 +3,12 @@
 ## 📌 Objectif du Projet
 Ce projet est une initiative personnelle visant à s'initier à l'architecture **microservices** et aux protocoles de communication modernes, plus précisément **gRPC** fonctionnant sur **HTTP/2.0**.
 
-L'idée centrale est de faire communiquer un serveur principal en **Go** avec un microservice de traitement en **Python**. Les données exploitées (horaires de transport) servent de support concret pour valider les échanges de données entre les différents services.
+L'idée centrale est de faire communiquer un serveur principal en **Go** avec un microservice de traitement en **Python**. Les données exploitées (horaires de transport en ile de france) servent de support concret pour valider les échanges de données entre les différents services.
+
+> ** Source des données :**
+> Les données utilisées dans ce projet proviennent de **PRIM**, le portail Open Data d'Île-de-France Mobilités. Pour faire fonctionner l'application (notamment obtenir une clé API), il est nécessaire de se créer un compte sur [prim.iledefrance-mobilites.fr](https://prim.iledefrance-mobilites.fr/).
+> Le fichier CSV contenant les arrêts de bus (`arrets-lignes.csv`) requis par le microservice Python peut être téléchargé ici : [Jeu de données : Arrêts et lignes associées](https://prim.iledefrance-mobilites.fr/fr/jeux-de-donnees/arrets-lignes).
+
 
 # 🏗️ Architecture du Projet
 Voici la structure actuelle du dépôt :
