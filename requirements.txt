@@ -2,3 +2,6 @@ pandas
 requests
 python-dotenv
 joblib
+grpcio-tools
+traceback
+concurrent
