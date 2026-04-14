@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	succ, err := grpc.NewClient(":8081", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	succ, err := grpc.NewClient("localhost:8081", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Fatalf("Erreur de la connexion au serveur: %v\n", err)
 	}
@@ -20,7 +20,7 @@ func main() {
 	requete := p.InputUser{
 		Ville: "Paris",
 		Bus:   "1",
-		Arret: "Châteleet",
+		Arret: "Châtelet",
 	}
 
 	reponse, err := c.GetInput(context.Background(), &requete)

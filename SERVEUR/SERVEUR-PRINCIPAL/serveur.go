@@ -26,7 +26,7 @@ func (s *Server) GetInput(ctx context.Context, input *p.InputUser) (*p.OutputSer
 }
 
 func startGRPC() {
-	succ, err := net.Listen("tcp", ":8081")
+	succ, err := net.Listen("tcp", "0.0.0.0:8081")
 	if err != nil {
 		log.Fatalf("Erreur d'initialisation du serveurserveur: %v\n", err)
 	}
@@ -47,13 +47,13 @@ func startHTTP() {
 	mux := http.NewServeMux()
 
 	log.Printf("Serveur HTTP lancé sur le port 8080...\n")
-	if err := http.ListenAndServe(":8080", mux); err != nil {
+	if err := http.ListenAndServe("0.0.0.0:8080", mux); err != nil {
 		log.Fatalf("Erreur serveur HTTP: %v\n", err)
 	}
 }
 
 func ClientData(arret string, bus string, ville string) (*p.OutputServer, error) {
-	succ, err := grpc.NewClient(":1717", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	succ, err := grpc.NewClient("python-app:1717", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Printf("Erreur de communication entre microservice: %v\n", err)
 	}
