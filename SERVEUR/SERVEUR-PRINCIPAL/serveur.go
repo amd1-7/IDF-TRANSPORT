@@ -55,7 +55,7 @@ func startHTTP() {
 func ClientData(arret string, bus string, ville string) (*p.OutputServer, error) {
 	succ, err := grpc.NewClient(":1717", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
-		log.Fatalf("Erreur de communication entre microservice: %v\n", err)
+		log.Printf("Erreur de communication entre microservice: %v\n", err)
 	}
 
 	c := p.NewTrafiqServiceClient(succ)
