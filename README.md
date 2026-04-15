@@ -16,12 +16,18 @@ Voici la structure actuelle du dépôt :
 ```text
 .
 ├── docker-compose.yml       # Orchestration des services
+├── FRONTEND                 # Interface Utilisateur
+│   ├── Dockerfile
+│   ├── app.py
+│   ├── isoFormat.py
+│   └── recupererData.py
 ├── LICENSE
 ├── README.md
 └── SERVEUR
     ├── MICROSERVICE (Backend Python) 
     │   ├── Dockerfile
     │   ├── Engine.py
+    │   ├── arrets-lignes.csv
     │   ├── requirements.txt
     │   ├── serveur.py
     │   ├── test.py
@@ -34,6 +40,12 @@ Voici la structure actuelle du dépôt :
         │   └── client.go
         ├── go.mod
         ├── go.sum
+        ├── outils
+        │   ├── ClientData.go
+        │   ├── ClientJsontoGrpc.go
+        │   ├── GetInput.go
+        │   ├── startGRPC.go
+        │   └── startHTTP.go
         ├── p
         │   ├── trafiq.pb.go
         │   └── trafiq_grpc.pb.go
@@ -75,6 +87,12 @@ go run serveur.go
 cd SERVEUR/SERVEUR-PRINCIPAL
 go run client_cmd/client.go
 ```
+
+**Pour Lancer le Frontend**:
+```bash
+cd FRONTEND
+python app.py
+```
 # Lancement centralisé avec Docker 
 Grâce à Docker, le déploiement des serveurs est automatisé.
 
@@ -92,6 +110,10 @@ Cette commande va construire et lancer le conteneur Python (port 1717) et le con
 **Pour vérifier que les services communiquent bien, lancez le client Go qui va interroger le serveur principal sur le port 8081** :
 ```bash
 go run SERVEUR/SERVEUR-PRINCIPAL/client_cmd/client.go
+```
+**Pour accéder au Frontend il suffit d'ouvrir cette url**:
+```text
+http://localhost:8501
 ```
 
 ## Mise en veille ou suppresion
